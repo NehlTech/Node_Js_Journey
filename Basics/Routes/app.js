@@ -1,19 +1,23 @@
 const http = require("http");
+const fs = require("fs");
 
 /***********************************************
  CREATING A SIMPLE WEB SERVER USING ROUTES
  ******************************************** */
 
+const html = fs.readFileSync("../Template/index.html", "utf-8");
 //STEP 1: CREATE A SERVER
 const server = http.createServer((request, response) => {
   let path = request.url;
 
   if (path === "/" || path.toLocaleLowerCase() === "/home") {
-    response.end("You are in the home page");
+    response.end(html.replace("{content}", "You are in Home page"));
   } else if (path.toLocaleLowerCase() === "/about") {
-    response.end("You are in the about page");
+    response.end(html.replace("{content}", "You are in About page"));
   } else if (path.toLocaleLowerCase() === "/contact") {
-    response.end("You are in the contact page");
+    response.end(html.replace("{content}", "You are in Contact page"));
+  } else {
+    response.end(html.replace("{content}", "Error 404: Page not found!"));
   }
 });
 
