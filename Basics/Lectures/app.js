@@ -1,6 +1,8 @@
 "use strict";
 
 const fs = require("fs"); // fs => fileSystem
+/****** creating a server ***** */
+const http = require("http");
 
 /************************************************* 
   READING AND WRITING FILES SYNCHRONOUSLY 
@@ -15,6 +17,7 @@ const fs = require("fs"); // fs => fileSystem
 /************************************************* 
   READING AND WRITING TO FILES ASYNCHRONOUSLY 
 **************************************************/
+/*
 fs.readFile("./Files/start.txt", "utf-8", function (error1, data1) {
   console.log(data1);
   fs.readFile(`./Files/${data1}.txt`, "utf-8", (error2, data2) => {
@@ -30,4 +33,22 @@ fs.readFile("./Files/start.txt", "utf-8", function (error1, data1) {
       );
     });
   });
+});
+*/
+
+/***********************************************
+ CREATING A SIMPLE WEB SERVER
+ ******************************************** */
+
+const html = fs.readFileSync("./Template/index.html", "utf-8");
+
+// Create the server
+const server = http.createServer((req, res) => {
+  res.end(html);
+  console.log("A new request received");
+});
+
+// Start the server
+server.listen(8000, "127.0.0.1", () => {
+  console.log("Server has started");
 });
